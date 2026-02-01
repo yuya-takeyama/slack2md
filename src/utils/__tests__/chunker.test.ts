@@ -37,7 +37,8 @@ describe("formatPartNumber", () => {
 });
 
 describe("ChunkBuilder", () => {
-  const simpleHeader = (n: number) => `# Header - p${String(n).padStart(2, "0")}\n\n`;
+  const simpleHeader = (n: number) =>
+    `# Header - p${String(n).padStart(2, "0")}\n\n`;
 
   it("creates single chunk when under threshold", () => {
     const builder = new ChunkBuilder({

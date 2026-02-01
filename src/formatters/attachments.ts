@@ -18,7 +18,7 @@ export interface AttachmentContext {
 
 export function formatAttachment(
   attachment: Attachment,
-  context: AttachmentContext
+  context: AttachmentContext,
 ): string {
   const lines: string[] = [];
 
@@ -46,7 +46,7 @@ export function formatAttachment(
 
 export function formatAttachments(
   attachments: Attachment[],
-  context: AttachmentContext
+  context: AttachmentContext,
 ): string {
   if (attachments.length === 0) return "";
   return attachments.map((a) => formatAttachment(a, context)).join("\n");

@@ -26,7 +26,7 @@ import type { Message } from "../types/db.js";
 program
   .requiredOption(
     "--partition <type>",
-    "Partition type: daily, weekly, or monthly"
+    "Partition type: daily, weekly, or monthly",
   )
   .requiredOption("--output-dir <dir>", "Output directory")
   .option("--timezone <tz>", "Timezone for formatting", "Asia/Tokyo")
@@ -41,7 +41,7 @@ const options = program.opts<{
 function groupByPartition(
   messages: Message[],
   partition: PartitionType,
-  timezone: string
+  timezone: string,
 ): Map<string, Message[]> {
   const groups = new Map<string, Message[]>();
 
@@ -96,7 +96,7 @@ async function main() {
     const channelGroups = groupByPartition(
       channelMessages,
       options.partition,
-      options.timezone
+      options.timezone,
     );
 
     for (const [partitionKey, messages] of channelGroups) {
@@ -123,7 +123,7 @@ async function main() {
       for (const result of results) {
         fileCount++;
         console.log(
-          `  Created: ${path.basename(result.filepath)} (${result.byteSize} bytes)`
+          `  Created: ${path.basename(result.filepath)} (${result.byteSize} bytes)`,
         );
       }
     }
@@ -133,7 +133,7 @@ async function main() {
     const threadGroups = groupByPartition(
       threadStarters,
       options.partition,
-      options.timezone
+      options.timezone,
     );
 
     for (const [partitionKey, starters] of threadGroups) {
@@ -173,7 +173,7 @@ async function main() {
       for (const result of results) {
         fileCount++;
         console.log(
-          `  Created: ${path.basename(result.filepath)} (${result.byteSize} bytes)`
+          `  Created: ${path.basename(result.filepath)} (${result.byteSize} bytes)`,
         );
       }
     }

@@ -3,7 +3,7 @@ import type { User, UserGroup } from "../types/db.js";
 export function convertMentions(
   text: string,
   users: Map<string, User>,
-  userGroups: Map<string, UserGroup>
+  userGroups: Map<string, UserGroup>,
 ): string {
   let result = text;
 
@@ -20,7 +20,7 @@ export function convertMentions(
       if (handle) return `@${handle}`;
       const userGroup = userGroups.get(groupId);
       return userGroup ? `@${userGroup.name}` : `@unknown-group`;
-    }
+    },
   );
 
   // <!here>, <!channel>, <!everyone>

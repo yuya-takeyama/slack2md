@@ -10,7 +10,7 @@ export function upsertChannel(channel: Channel): void {
     ON CONFLICT(id) DO UPDATE SET
       name = excluded.name,
       raw = excluded.raw
-    `
+    `,
   ).run(channel.id, channel.name, channel.raw);
 }
 
@@ -23,7 +23,7 @@ export function upsertChannels(channels: Channel[]): void {
     ON CONFLICT(id) DO UPDATE SET
       name = excluded.name,
       raw = excluded.raw
-    `
+    `,
   );
 
   const transaction = db.transaction((channels: Channel[]) => {

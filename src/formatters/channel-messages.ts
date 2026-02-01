@@ -15,7 +15,7 @@ export interface FormatContext {
 export function getAuthorLabel(
   userId: string,
   users: Map<string, User>,
-  bots?: Map<string, Bot>
+  bots?: Map<string, Bot>,
 ): string {
   if (userId.startsWith("B")) {
     const bot = bots?.get(userId);
@@ -27,14 +27,14 @@ export function getAuthorLabel(
 
 export function formatSingleMessage(
   message: Message,
-  context: FormatContext
+  context: FormatContext,
 ): string {
   const lines: string[] = [];
 
   const authorLabel = getAuthorLabel(
     message.user_id,
     context.users,
-    context.bots
+    context.bots,
   );
   const timestamp = formatTimestamp(message.timestamp, context.timezone);
 
@@ -82,7 +82,7 @@ export function formatChannelMessages(
   channel: Channel,
   messages: Message[],
   partitionKey: string,
-  context: FormatContext
+  context: FormatContext,
 ): string {
   const lines: string[] = [];
 

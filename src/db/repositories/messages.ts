@@ -8,7 +8,7 @@ export function upsertMessage(message: Message): void {
     INSERT INTO messages (id, channel_id, thread_id, user_id, text, timestamp, raw)
     VALUES (?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(id) DO NOTHING
-    `
+    `,
   ).run(
     message.id,
     message.channel_id,
@@ -16,7 +16,7 @@ export function upsertMessage(message: Message): void {
     message.user_id,
     message.text,
     message.timestamp,
-    message.raw
+    message.raw,
   );
 }
 
@@ -27,7 +27,7 @@ export function upsertMessages(messages: Message[]): void {
     INSERT INTO messages (id, channel_id, thread_id, user_id, text, timestamp, raw)
     VALUES (?, ?, ?, ?, ?, ?, ?)
     ON CONFLICT(id) DO NOTHING
-    `
+    `,
   );
 
   const transaction = db.transaction((messages: Message[]) => {
@@ -39,7 +39,7 @@ export function upsertMessages(messages: Message[]): void {
         message.user_id,
         message.text,
         message.timestamp,
-        message.raw
+        message.raw,
       );
     }
   });
@@ -55,7 +55,7 @@ export function getChannelMessages(channelId: string): Message[] {
       SELECT * FROM messages
       WHERE channel_id = ? AND thread_id IS NULL
       ORDER BY timestamp ASC
-      `
+      `,
     )
     .all(channelId) as Message[];
 }
@@ -63,7 +63,7 @@ export function getChannelMessages(channelId: string): Message[] {
 export function getChannelMessagesByDateRange(
   channelId: string,
   from: number,
-  to: number
+  to: number,
 ): Message[] {
   const db = getDatabase();
   return db
@@ -73,7 +73,7 @@ export function getChannelMessagesByDateRange(
       WHERE channel_id = ? AND thread_id IS NULL
         AND timestamp >= ? AND timestamp < ?
       ORDER BY timestamp ASC
-      `
+      `,
     )
     .all(channelId, from, to) as Message[];
 }
@@ -86,7 +86,7 @@ export function getThreadMessages(threadId: string): Message[] {
       SELECT * FROM messages
       WHERE thread_id = ?
       ORDER BY timestamp ASC
-      `
+      `,
     )
     .all(threadId) as Message[];
 }
@@ -101,7 +101,7 @@ export function getThreadStarters(channelId: string): Message[] {
       INNER JOIN messages m2 ON m1.id = m2.thread_id
       WHERE m1.channel_id = ?
       ORDER BY m1.timestamp ASC
-      `
+      `,
     )
     .all(channelId) as Message[];
 }
@@ -109,7 +109,7 @@ export function getThreadStarters(channelId: string): Message[] {
 export function getThreadStartersByDateRange(
   channelId: string,
   from: number,
-  to: number
+  to: number,
 ): Message[] {
   const db = getDatabase();
   return db
@@ -121,7 +121,7 @@ export function getThreadStartersByDateRange(
       WHERE m1.channel_id = ?
         AND m1.timestamp >= ? AND m1.timestamp < ?
       ORDER BY m1.timestamp ASC
-      `
+      `,
     )
     .all(channelId, from, to) as Message[];
 }
@@ -135,8 +135,8 @@ export function getAllMessages(): Message[] {
 
 export function getDistinctChannelIds(): string[] {
   const db = getDatabase();
-  const rows = db
-    .prepare("SELECT DISTINCT channel_id FROM messages")
-    .all() as { channel_id: string }[];
+  const rows = db.prepare("SELECT DISTINCT channel_id FROM messages").all() as {
+    channel_id: string;
+  }[];
   return rows.map((r) => r.channel_id);
 }

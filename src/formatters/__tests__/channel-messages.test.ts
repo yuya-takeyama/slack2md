@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { formatChannelMessages, type FormatContext } from "../channel-messages.js";
+import {
+  formatChannelMessages,
+  type FormatContext,
+} from "../channel-messages.js";
 import type { Message, User, UserGroup, Channel, Bot } from "../../types/db.js";
 
 describe("formatChannelMessages", () => {
@@ -57,7 +60,12 @@ describe("formatChannelMessages", () => {
       },
     ];
 
-    const result = formatChannelMessages(channel, messages, "2024-W01", context);
+    const result = formatChannelMessages(
+      channel,
+      messages,
+      "2024-W01",
+      context,
+    );
 
     expect(result).toContain("# general (C12345678) - 2024-W01");
     expect(result).toContain("## by alice@example.com on 2024-01-01 00:00:00");
@@ -86,7 +94,12 @@ describe("formatChannelMessages", () => {
       },
     ];
 
-    const result = formatChannelMessages(channel, messages, "2024-W01", context);
+    const result = formatChannelMessages(
+      channel,
+      messages,
+      "2024-W01",
+      context,
+    );
 
     expect(result).toContain("## by alice@example.com");
     expect(result).toContain("First message");
@@ -107,7 +120,12 @@ describe("formatChannelMessages", () => {
       },
     ];
 
-    const result = formatChannelMessages(channel, messages, "2024-W01", context);
+    const result = formatChannelMessages(
+      channel,
+      messages,
+      "2024-W01",
+      context,
+    );
 
     expect(result).toContain("Hey @bob@example.com, check #general");
   });
@@ -133,7 +151,12 @@ describe("formatChannelMessages", () => {
       },
     ];
 
-    const result = formatChannelMessages(channel, messages, "2024-W01", context);
+    const result = formatChannelMessages(
+      channel,
+      messages,
+      "2024-W01",
+      context,
+    );
 
     expect(result).toContain("Check this out");
     expect(result).toContain("> **URL**: https://example.com");
@@ -154,7 +177,12 @@ describe("formatChannelMessages", () => {
       },
     ];
 
-    const result = formatChannelMessages(channel, messages, "2024-W01", context);
+    const result = formatChannelMessages(
+      channel,
+      messages,
+      "2024-W01",
+      context,
+    );
 
     expect(result).toContain("## by unknown on");
   });
@@ -186,7 +214,12 @@ describe("formatChannelMessages", () => {
       },
     ];
 
-    const result = formatChannelMessages(channel, messages, "2024-W01", contextWithBot);
+    const result = formatChannelMessages(
+      channel,
+      messages,
+      "2024-W01",
+      contextWithBot,
+    );
 
     expect(result).toContain("## by daily-reminder[Bot] on");
     expect(result).toContain("Daily reminder message");
@@ -210,7 +243,12 @@ describe("formatChannelMessages", () => {
       },
     ];
 
-    const result = formatChannelMessages(channel, messages, "2024-W01", contextWithBot);
+    const result = formatChannelMessages(
+      channel,
+      messages,
+      "2024-W01",
+      contextWithBot,
+    );
 
     expect(result).toContain("## by unknown[Bot] on");
   });

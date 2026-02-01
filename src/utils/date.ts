@@ -6,7 +6,7 @@ export type PartitionType = "daily" | "weekly" | "monthly";
 export function parseDateRange(
   from: string,
   to: string,
-  timezone: string
+  timezone: string,
 ): { oldest: number; latest: number } {
   const fromDate = parse(from, "yyyy-MM-dd", new Date());
   const toDate = parse(to, "yyyy-MM-dd", new Date());
@@ -25,7 +25,7 @@ export function parseDateRange(
 export function getPartitionKey(
   timestamp: number,
   partition: PartitionType,
-  timezone: string
+  timezone: string,
 ): string {
   const date = toZonedTime(new Date(timestamp), timezone);
 

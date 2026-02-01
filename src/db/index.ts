@@ -8,7 +8,7 @@ const DEFAULT_DB_PATH = path.join(process.cwd(), "data", "slack2md.db");
 let db: Database.Database | null = null;
 
 export function initializeDatabase(
-  dbPath: string = DEFAULT_DB_PATH
+  dbPath: string = DEFAULT_DB_PATH,
 ): Database.Database {
   if (db) return db;
 

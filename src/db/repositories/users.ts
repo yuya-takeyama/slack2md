@@ -11,7 +11,7 @@ export function upsertUser(user: User): void {
       email = excluded.email,
       name = excluded.name,
       raw = excluded.raw
-    `
+    `,
   ).run(user.id, user.email, user.name, user.raw);
 }
 
@@ -25,7 +25,7 @@ export function upsertUsers(users: User[]): void {
       email = excluded.email,
       name = excluded.name,
       raw = excluded.raw
-    `
+    `,
   );
 
   const transaction = db.transaction((users: User[]) => {

@@ -10,7 +10,7 @@ export function upsertBot(bot: Bot): void {
     ON CONFLICT(id) DO UPDATE SET
       name = excluded.name,
       raw = excluded.raw
-    `
+    `,
   ).run(bot.id, bot.name, bot.raw);
 }
 
@@ -23,7 +23,7 @@ export function upsertBots(bots: Bot[]): void {
     ON CONFLICT(id) DO UPDATE SET
       name = excluded.name,
       raw = excluded.raw
-    `
+    `,
   );
 
   const transaction = db.transaction((bots: Bot[]) => {

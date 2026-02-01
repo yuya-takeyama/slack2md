@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { formatThreads, type ThreadGroup } from "../threads.js";
-import { type FormatContext } from "../channel-messages.js";
-import type { Message, User, UserGroup, Channel, Bot } from "../../types/db.js";
+import type { FormatContext } from "../channel-messages.js";
+import type { User, UserGroup, Channel, Bot } from "../../types/db.js";
 
 describe("formatThreads", () => {
   const context: FormatContext = {

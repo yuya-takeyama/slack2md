@@ -121,7 +121,7 @@ export class ChunkBuilder {
 export function buildChunks(
   items: string[],
   generateHeader: (partNumber: number) => string,
-  options?: { thresholdBytes?: number; limitBytes?: number }
+  options?: { thresholdBytes?: number; limitBytes?: number },
 ): Chunk[] {
   const builder = new ChunkBuilder({
     generateHeader,

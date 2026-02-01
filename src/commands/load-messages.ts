@@ -29,7 +29,7 @@ async function main() {
   const { oldest, latest } = parseDateRange(
     options.from,
     options.to,
-    options.timezone
+    options.timezone,
   );
 
   console.log(`Loading messages from ${options.from} to ${options.to}`);
@@ -50,7 +50,7 @@ async function main() {
     for await (const slackMessage of fetchChannelMessages(
       channelId,
       oldest,
-      latest
+      latest,
     )) {
       const message = slackMessageToMessage(slackMessage, channelId, null);
       messages.push(message);
@@ -81,7 +81,9 @@ async function main() {
   }
 
   closeDatabase();
-  console.log(`\nDone! Total: ${totalMessages} messages, ${totalThreadReplies} thread replies`);
+  console.log(
+    `\nDone! Total: ${totalMessages} messages, ${totalThreadReplies} thread replies`,
+  );
 }
 
 main().catch((error) => {

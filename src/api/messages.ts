@@ -5,7 +5,7 @@ import type { Message } from "../types/db.js";
 export async function* fetchChannelMessages(
   channelId: string,
   oldest?: number,
-  latest?: number
+  latest?: number,
 ): AsyncGenerator<SlackMessage> {
   const client = getSlackClient();
   let cursor: string | undefined;
@@ -31,7 +31,7 @@ export async function* fetchChannelMessages(
 
 export async function* fetchThreadReplies(
   channelId: string,
-  threadTs: string
+  threadTs: string,
 ): AsyncGenerator<SlackMessage> {
   const client = getSlackClient();
   let cursor: string | undefined;
@@ -59,7 +59,7 @@ export async function* fetchThreadReplies(
 export function slackMessageToMessage(
   slackMessage: SlackMessage,
   channelId: string,
-  threadId: string | null = null
+  threadId: string | null = null,
 ): Message {
   const ts = slackMessage.ts ?? "";
   const timestampMs = Math.floor(parseFloat(ts) * 1000);

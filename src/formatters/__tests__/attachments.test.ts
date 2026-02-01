@@ -42,7 +42,7 @@ describe("formatAttachment", () => {
     expect(result).toBe(
       `> **URL**: https://example.com/article
 > **Title**: Example Article
----`
+---`,
     );
   });
 
@@ -56,7 +56,7 @@ describe("formatAttachment", () => {
       `> **Title**: Note
 >
 > This is the content
----`
+---`,
     );
   });
 
@@ -70,7 +70,7 @@ describe("formatAttachment", () => {
 > Line 1
 > Line 2
 > Line 3
----`
+---`,
     );
   });
 
@@ -81,7 +81,7 @@ describe("formatAttachment", () => {
     const result = formatAttachment(attachment, context);
     expect(result).toBe(
       `> **URL**: https://example.com/page
----`
+---`,
     );
   });
 
@@ -93,7 +93,7 @@ describe("formatAttachment", () => {
     expect(result).toBe(
       `>
 > Fallback content
----`
+---`,
     );
   });
 
@@ -105,7 +105,7 @@ describe("formatAttachment", () => {
     expect(result).toBe(
       `>
 > Hey @alice@example.com, please check this
----`
+---`,
     );
   });
 
@@ -117,7 +117,7 @@ describe("formatAttachment", () => {
     expect(result).toBe(
       `>
 > Posted in #general
----`
+---`,
     );
   });
 
@@ -136,16 +136,13 @@ describe("formatAttachments", () => {
   };
 
   it("formats multiple attachments", () => {
-    const attachments: Attachment[] = [
-      { title: "First" },
-      { title: "Second" },
-    ];
+    const attachments: Attachment[] = [{ title: "First" }, { title: "Second" }];
     const result = formatAttachments(attachments, context);
     expect(result).toBe(
       `> **Title**: First
 ---
 > **Title**: Second
----`
+---`,
     );
   });
 

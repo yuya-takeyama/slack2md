@@ -14,7 +14,7 @@ export interface ThreadGroup {
 function getThreadUrl(
   channelId: string,
   threadTs: string,
-  workspaceUrl?: string
+  workspaceUrl?: string,
 ): string {
   const tsForUrl = threadTs.replace(".", "");
   if (workspaceUrl) {
@@ -26,18 +26,18 @@ function getThreadUrl(
 export function formatSingleThread(
   thread: ThreadGroup,
   channel: Channel,
-  context: FormatContext
+  context: FormatContext,
 ): string {
   const lines: string[] = [];
 
   const starterLabel = getAuthorLabel(
     thread.starterMessage.user_id,
     context.users,
-    context.bots
+    context.bots,
   );
   const starterTimestamp = formatTimestamp(
     thread.starterMessage.timestamp,
-    context.timezone
+    context.timezone,
   );
 
   const threadTs = thread.starterMessage.id.split("-").pop() ?? "";
@@ -51,11 +51,7 @@ export function formatSingleThread(
   lines.push("");
 
   let starterText = thread.starterMessage.text;
-  starterText = convertMentions(
-    starterText,
-    context.users,
-    context.userGroups
-  );
+  starterText = convertMentions(starterText, context.users, context.userGroups);
   starterText = convertChannelRefs(starterText, context.channels);
   lines.push(starterText);
   lines.push("");
@@ -68,13 +64,17 @@ export function formatSingleThread(
         users: context.users,
         userGroups: context.userGroups,
         channels: context.channels,
-      }
+      },
     );
     lines.push(attachmentsStr);
   }
 
   for (const reply of thread.replies) {
-    const replyLabel = getAuthorLabel(reply.user_id, context.users, context.bots);
+    const replyLabel = getAuthorLabel(
+      reply.user_id,
+      context.users,
+      context.bots,
+    );
     const replyTimestamp = formatTimestamp(reply.timestamp, context.timezone);
 
     lines.push(`### by ${replyLabel} on ${replyTimestamp}`);
@@ -94,7 +94,7 @@ export function formatSingleThread(
           users: context.users,
           userGroups: context.userGroups,
           channels: context.channels,
-        }
+        },
       );
       lines.push(attachmentsStr);
     }
@@ -110,7 +110,7 @@ export function formatThreads(
   channel: Channel,
   threads: ThreadGroup[],
   partitionKey: string,
-  context: FormatContext
+  context: FormatContext,
 ): string {
   const lines: string[] = [];
 
