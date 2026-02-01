@@ -14,11 +14,13 @@ import {
 } from "../db/repositories/messages.js";
 import { getPartitionKey, type PartitionType } from "../utils/date.js";
 import {
-  formatChannelMessages,
-  formatThreads,
+  formatSingleMessage,
+  formatSingleThread,
+  generateHeader,
   type FormatContext,
   type ThreadGroup,
 } from "../formatters/index.js";
+import { ChunkedWriter } from "../utils/chunker.js";
 import type { Message } from "../types/db.js";
 
 program
@@ -98,17 +100,32 @@ async function main() {
     );
 
     for (const [partitionKey, messages] of channelGroups) {
-      const content = formatChannelMessages(
-        channel,
-        messages,
-        partitionKey,
-        context
-      );
-      const filename = `${channel.name}-channel-${partitionKey}.md`;
-      const filepath = path.join(options.outputDir, filename);
-      fs.writeFileSync(filepath, content, "utf-8");
-      fileCount++;
-      console.log(`  Created: ${filename}`);
+      const baseFilename = `${channel.name}-channel-${partitionKey}`;
+
+      const writer = new ChunkedWriter({
+        outputDir: options.outputDir,
+        baseFilename,
+        generateHeader: (partNumber) =>
+          generateHeader({
+            channel,
+            partitionKey,
+            partNumber,
+            isThread: false,
+          }),
+      });
+
+      for (const message of messages) {
+        const formatted = formatSingleMessage(message, context);
+        writer.add(formatted);
+      }
+
+      const results = writer.finalize();
+      for (const result of results) {
+        fileCount++;
+        console.log(
+          `  Created: ${path.basename(result.filepath)} (${result.byteSize} bytes)`
+        );
+      }
     }
 
     // Thread messages
@@ -133,12 +150,32 @@ async function main() {
 
       if (threads.length === 0) continue;
 
-      const content = formatThreads(channel, threads, partitionKey, context);
-      const filename = `${channel.name}-threads-${partitionKey}.md`;
-      const filepath = path.join(options.outputDir, filename);
-      fs.writeFileSync(filepath, content, "utf-8");
-      fileCount++;
-      console.log(`  Created: ${filename}`);
+      const baseFilename = `${channel.name}-threads-${partitionKey}`;
+
+      const writer = new ChunkedWriter({
+        outputDir: options.outputDir,
+        baseFilename,
+        generateHeader: (partNumber) =>
+          generateHeader({
+            channel,
+            partitionKey,
+            partNumber,
+            isThread: true,
+          }),
+      });
+
+      for (const thread of threads) {
+        const formatted = formatSingleThread(thread, channel, context);
+        writer.add(formatted);
+      }
+
+      const results = writer.finalize();
+      for (const result of results) {
+        fileCount++;
+        console.log(
+          `  Created: ${path.basename(result.filepath)} (${result.byteSize} bytes)`
+        );
+      }
     }
   }
 
