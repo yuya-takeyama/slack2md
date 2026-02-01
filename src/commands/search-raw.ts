@@ -1,7 +1,7 @@
 import { program } from "commander";
 import { initializeDatabase, getDatabase, closeDatabase } from "../db/index.js";
 
-const VALID_TABLES = ["users", "channels", "user_groups", "messages"] as const;
+const VALID_TABLES = ["users", "channels", "user_groups", "bots", "messages"] as const;
 type ValidTable = (typeof VALID_TABLES)[number];
 
 function isValidTable(table: string): table is ValidTable {
@@ -24,6 +24,7 @@ const QUERIES: Record<ValidTable, string> = {
   users: "SELECT * FROM users WHERE raw LIKE ?",
   channels: "SELECT * FROM channels WHERE raw LIKE ?",
   user_groups: "SELECT * FROM user_groups WHERE raw LIKE ?",
+  bots: "SELECT * FROM bots WHERE raw LIKE ?",
   messages: "SELECT * FROM messages WHERE raw LIKE ?",
 };
 

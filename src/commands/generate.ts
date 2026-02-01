@@ -5,6 +5,7 @@ import { initializeDatabase, closeDatabase } from "../db/index.js";
 import { getUsersMap } from "../db/repositories/users.js";
 import { getChannelsMap, getChannelById } from "../db/repositories/channels.js";
 import { getUserGroupsMap } from "../db/repositories/user-groups.js";
+import { getBotsMap } from "../db/repositories/bots.js";
 import {
   getDistinctChannelIds,
   getChannelMessages,
@@ -66,11 +67,13 @@ async function main() {
   const users = getUsersMap();
   const channels = getChannelsMap();
   const userGroups = getUserGroupsMap();
+  const bots = getBotsMap();
 
   const context: FormatContext = {
     users,
     channels,
     userGroups,
+    bots,
     timezone: options.timezone,
   };
 

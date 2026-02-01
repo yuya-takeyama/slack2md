@@ -1,4 +1,4 @@
-import type { Message, User, UserGroup, Channel } from "../types/db.js";
+import type { Message, User, UserGroup, Channel, Bot } from "../types/db.js";
 import { convertMentions } from "./mentions.js";
 import { convertChannelRefs } from "./channel-refs.js";
 import { formatAttachments, type Attachment } from "./attachments.js";
@@ -8,7 +8,21 @@ export interface FormatContext {
   users: Map<string, User>;
   userGroups: Map<string, UserGroup>;
   channels: Map<string, Channel>;
+  bots?: Map<string, Bot>;
   timezone: string;
+}
+
+export function getAuthorLabel(
+  userId: string,
+  users: Map<string, User>,
+  bots?: Map<string, Bot>
+): string {
+  if (userId.startsWith("B")) {
+    const bot = bots?.get(userId);
+    return `${bot?.name ?? "unknown"}[Bot]`;
+  }
+  const user = users.get(userId);
+  return user?.email ?? "unknown";
 }
 
 export function formatChannelMessages(
@@ -23,11 +37,10 @@ export function formatChannelMessages(
   lines.push("");
 
   for (const message of messages) {
-    const user = context.users.get(message.user_id);
-    const email = user?.email ?? "unknown";
+    const authorLabel = getAuthorLabel(message.user_id, context.users, context.bots);
     const timestamp = formatTimestamp(message.timestamp, context.timezone);
 
-    lines.push(`## by ${email} on ${timestamp}`);
+    lines.push(`## by ${authorLabel} on ${timestamp}`);
     lines.push("");
 
     let text = message.text;

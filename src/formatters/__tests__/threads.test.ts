@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { formatThreads, type ThreadGroup } from "../threads.js";
 import { type FormatContext } from "../channel-messages.js";
-import type { Message, User, UserGroup, Channel } from "../../types/db.js";
+import type { Message, User, UserGroup, Channel, Bot } from "../../types/db.js";
 
 describe("formatThreads", () => {
   const context: FormatContext = {
@@ -232,5 +232,52 @@ describe("formatThreads", () => {
 
     expect(result).toContain("# general (C12345678) - Threads - 2024-W01");
     expect(result).not.toContain("<slack_thread");
+  });
+
+  it("formats bot thread starter with bot name", () => {
+    const contextWithBot: FormatContext = {
+      ...context,
+      bots: new Map<string, Bot>([
+        [
+          "B12345678",
+          {
+            id: "B12345678",
+            name: "daily-reminder",
+            raw: "{}",
+          },
+        ],
+      ]),
+    };
+
+    const threads: ThreadGroup[] = [
+      {
+        threadId: "C12345678-1",
+        starterMessage: {
+          id: "C12345678-1",
+          channel_id: "C12345678",
+          thread_id: null,
+          user_id: "B12345678",
+          text: "Bot started this thread",
+          timestamp: 1704067200000,
+          raw: JSON.stringify({}),
+        },
+        replies: [
+          {
+            id: "C12345678-2",
+            channel_id: "C12345678",
+            thread_id: "C12345678-1",
+            user_id: "U12345678",
+            text: "Human reply",
+            timestamp: 1704067260000,
+            raw: JSON.stringify({}),
+          },
+        ],
+      },
+    ];
+
+    const result = formatThreads(channel, threads, "2024-W01", contextWithBot);
+
+    expect(result).toContain("## by daily-reminder[Bot] on");
+    expect(result).toContain("### by alice@example.com on");
   });
 });

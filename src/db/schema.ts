@@ -18,6 +18,12 @@ export const SCHEMA = `
     raw TEXT NOT NULL
   );
 
+  CREATE TABLE IF NOT EXISTS bots (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    raw TEXT NOT NULL
+  );
+
   CREATE TABLE IF NOT EXISTS messages (
     id TEXT PRIMARY KEY,
     channel_id TEXT NOT NULL,

@@ -3,7 +3,7 @@ import { convertMentions } from "./mentions.js";
 import { convertChannelRefs } from "./channel-refs.js";
 import { formatAttachments, type Attachment } from "./attachments.js";
 import { formatTimestamp } from "../utils/date.js";
-import type { FormatContext } from "./channel-messages.js";
+import { type FormatContext, getAuthorLabel } from "./channel-messages.js";
 
 export interface ThreadGroup {
   threadId: string;
@@ -35,8 +35,11 @@ export function formatThreads(
   lines.push("");
 
   for (const thread of threads) {
-    const starterUser = context.users.get(thread.starterMessage.user_id);
-    const starterEmail = starterUser?.email ?? "unknown";
+    const starterLabel = getAuthorLabel(
+      thread.starterMessage.user_id,
+      context.users,
+      context.bots
+    );
     const starterTimestamp = formatTimestamp(
       thread.starterMessage.timestamp,
       context.timezone
@@ -47,7 +50,7 @@ export function formatThreads(
 
     lines.push(`<slack_thread thread_url="${threadUrl}">`);
     lines.push("");
-    lines.push(`## by ${starterEmail} on ${starterTimestamp}`);
+    lines.push(`## by ${starterLabel} on ${starterTimestamp}`);
     lines.push("");
     lines.push("---");
     lines.push("");
@@ -76,11 +79,10 @@ export function formatThreads(
     }
 
     for (const reply of thread.replies) {
-      const replyUser = context.users.get(reply.user_id);
-      const replyEmail = replyUser?.email ?? "unknown";
+      const replyLabel = getAuthorLabel(reply.user_id, context.users, context.bots);
       const replyTimestamp = formatTimestamp(reply.timestamp, context.timezone);
 
-      lines.push(`### by ${replyEmail} on ${replyTimestamp}`);
+      lines.push(`### by ${replyLabel} on ${replyTimestamp}`);
       lines.push("");
 
       let replyText = reply.text;

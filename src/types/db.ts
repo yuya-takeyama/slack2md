@@ -26,3 +26,9 @@ export interface Message {
   timestamp: number;
   raw: string;
 }
+
+export interface Bot {
+  id: string;
+  name: string;
+  raw: string;
+}

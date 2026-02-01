@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { formatChannelMessages, type FormatContext } from "../channel-messages.js";
-import type { Message, User, UserGroup, Channel } from "../../types/db.js";
+import type { Message, User, UserGroup, Channel, Bot } from "../../types/db.js";
 
 describe("formatChannelMessages", () => {
   const context: FormatContext = {
@@ -157,6 +157,62 @@ describe("formatChannelMessages", () => {
     const result = formatChannelMessages(channel, messages, "2024-W01", context);
 
     expect(result).toContain("## by unknown on");
+  });
+
+  it("formats bot message with bot name", () => {
+    const contextWithBot: FormatContext = {
+      ...context,
+      bots: new Map<string, Bot>([
+        [
+          "B12345678",
+          {
+            id: "B12345678",
+            name: "daily-reminder",
+            raw: "{}",
+          },
+        ],
+      ]),
+    };
+
+    const messages: Message[] = [
+      {
+        id: "C12345678-1",
+        channel_id: "C12345678",
+        thread_id: null,
+        user_id: "B12345678",
+        text: "Daily reminder message",
+        timestamp: 1704067200000,
+        raw: JSON.stringify({}),
+      },
+    ];
+
+    const result = formatChannelMessages(channel, messages, "2024-W01", contextWithBot);
+
+    expect(result).toContain("## by daily-reminder[Bot] on");
+    expect(result).toContain("Daily reminder message");
+  });
+
+  it("uses 'unknown bot' for missing bot", () => {
+    const contextWithBot: FormatContext = {
+      ...context,
+      bots: new Map<string, Bot>(),
+    };
+
+    const messages: Message[] = [
+      {
+        id: "C12345678-1",
+        channel_id: "C12345678",
+        thread_id: null,
+        user_id: "BUNKNOWN",
+        text: "Hello from bot",
+        timestamp: 1704067200000,
+        raw: JSON.stringify({}),
+      },
+    ];
+
+    const result = formatChannelMessages(channel, messages, "2024-W01", contextWithBot);
+
+    expect(result).toContain("## by unknown[Bot] on");
   });
 
   it("formats empty messages array", () => {
