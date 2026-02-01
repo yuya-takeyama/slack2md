@@ -1,6 +1,11 @@
 {
   "checksums": [
     {
+      "id": "github_release/github.com/cli/cli/v2.86.0/gh_2.86.0_linux_amd64.tar.gz",
+      "checksum": "F3B08BD6A28420CC2229B0A1A687FA25F2B838D3F04B297414C1041CA68103C7",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/cli/cli/v2.86.0/gh_2.86.0_macOS_arm64.zip",
       "checksum": "BDE753978A352C5AE6C4ABEC47334D516E82807AF20C9DBBD45507A5A0AEDAAA",
       "algorithm": "sha256"
@@ -11,8 +16,23 @@
       "algorithm": "sha256"
     },
     {
+      "id": "github_release/github.com/direnv/direnv/v2.37.1/direnv.linux-amd64",
+      "checksum": "1F1B93DD6F38523FDE26DFAC96151EF9D31A374E3005CD3345FB93555AE0C9B5",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/mise/v2026.2.0/mise-v2026.2.0-linux-x64-musl.tar.gz",
+      "checksum": "1693248FDEE8DD316FC31CD64844F65FDDC8778176E14842ED168DE5B076D728",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/jdx/mise/v2026.2.0/mise-v2026.2.0-macos-arm64.tar.gz",
       "checksum": "F3BC94BCD49DBF4C2AC1FEB0478DE8A94B741D6DEC8C1098C546F5E040C9EABD",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.28.2/pnpm-linux-x64",
+      "checksum": "9F38396F660CD3B1F71E0B0AF0B7BA22DD1FD446DC37840A1B6A025868557390",
       "algorithm": "sha256"
     },
     {
@@ -23,6 +43,11 @@
     {
       "id": "github_release/github.com/suzuki-shunsuke/pinact/v3.8.0/pinact_darwin_arm64.tar.gz",
       "checksum": "512E90FB9861912B1414B473CEA7277794750BE1D7756C6D296FA1077CE9E5EC",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/suzuki-shunsuke/pinact/v3.8.0/pinact_linux_amd64.tar.gz",
+      "checksum": "13A5415F6A9E6F6CC7140954EEFF120488C0B6C69525FA541011ACC2A39F0429",
       "algorithm": "sha256"
     },
     {
