@@ -1,0 +1,16 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/aquaproj/aqua/main/json-schema/aqua-yaml.json
+# aqua - Declarative CLI Version Manager
+# https://aquaproj.github.io/
+checksum:
+  enabled: true
+  require_checksum: true
+  supported_envs:
+    - darwin/arm64
+registries:
+  - type: standard
+    ref: v4.464.0 # renovate: depName=aquaproj/aqua-registry
+packages:
+  - name: direnv/direnv@v2.37.1
+  - name: jdx/mise@v2026.2.0
+  - name: pnpm/pnpm@v10.28.2

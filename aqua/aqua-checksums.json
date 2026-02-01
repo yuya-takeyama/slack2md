@@ -1,0 +1,24 @@
+{
+  "checksums": [
+    {
+      "id": "github_release/github.com/direnv/direnv/v2.37.1/direnv.darwin-arm64",
+      "checksum": "4F569F3A36732BFD8B8FEA7BFCC6AD87A59745C109022164D0CA4832451D5369",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/jdx/mise/v2026.2.0/mise-v2026.2.0-macos-arm64.tar.gz",
+      "checksum": "F3BC94BCD49DBF4C2AC1FEB0478DE8A94B741D6DEC8C1098C546F5E040C9EABD",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "github_release/github.com/pnpm/pnpm/v10.28.2/pnpm-macos-arm64",
+      "checksum": "38A23BF53D918B5192F71ED58E6DF9609DA478790F89B20CA5F45C3CD46D1D2C",
+      "algorithm": "sha256"
+    },
+    {
+      "id": "registries/github_content/github.com/aquaproj/aqua-registry/v4.464.0/registry.yaml",
+      "checksum": "B853124C0DB3D2E3FE7B96395E96CA01A9FCC4AF0EC8E14CBB6A34E0EFB70E76",
+      "algorithm": "sha256"
+    }
+  ]
+}
