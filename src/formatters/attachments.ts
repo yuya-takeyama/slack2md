@@ -1,3 +1,7 @@
+import type { User, UserGroup, Channel } from "../types/db.js";
+import { convertMentions } from "./mentions.js";
+import { convertChannelRefs } from "./channel-refs.js";
+
 export interface Attachment {
   title?: string;
   title_link?: string;
@@ -6,7 +10,16 @@ export interface Attachment {
   from_url?: string;
 }
 
-export function formatAttachment(attachment: Attachment): string {
+export interface AttachmentContext {
+  users: Map<string, User>;
+  userGroups: Map<string, UserGroup>;
+  channels: Map<string, Channel>;
+}
+
+export function formatAttachment(
+  attachment: Attachment,
+  context: AttachmentContext
+): string {
   const lines: string[] = [];
 
   const url = attachment.title_link ?? attachment.from_url;
@@ -18,8 +31,10 @@ export function formatAttachment(attachment: Attachment): string {
     lines.push(`> **Title**: ${attachment.title}`);
   }
 
-  const text = attachment.text ?? attachment.fallback;
+  let text = attachment.text ?? attachment.fallback;
   if (text) {
+    text = convertMentions(text, context.users, context.userGroups);
+    text = convertChannelRefs(text, context.channels);
     lines.push(">");
     const escapedText = text.replace(/\n/g, "\n> ");
     lines.push(`> ${escapedText}`);
@@ -29,7 +44,10 @@ export function formatAttachment(attachment: Attachment): string {
   return lines.join("\n");
 }
 
-export function formatAttachments(attachments: Attachment[]): string {
+export function formatAttachments(
+  attachments: Attachment[],
+  context: AttachmentContext
+): string {
   if (attachments.length === 0) return "";
-  return attachments.map(formatAttachment).join("\n");
+  return attachments.map((a) => formatAttachment(a, context)).join("\n");
 }

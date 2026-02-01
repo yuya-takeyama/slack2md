@@ -38,7 +38,11 @@ export function formatChannelMessages(
 
     const raw = JSON.parse(message.raw);
     if (raw.attachments && raw.attachments.length > 0) {
-      const attachmentsStr = formatAttachments(raw.attachments as Attachment[]);
+      const attachmentsStr = formatAttachments(raw.attachments as Attachment[], {
+        users: context.users,
+        userGroups: context.userGroups,
+        channels: context.channels,
+      });
       lines.push(attachmentsStr);
     }
 

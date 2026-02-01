@@ -1,6 +1,10 @@
 export { convertMentions } from "./mentions.js";
 export { convertChannelRefs } from "./channel-refs.js";
-export { formatAttachment, formatAttachments } from "./attachments.js";
+export {
+  formatAttachment,
+  formatAttachments,
+  type AttachmentContext,
+} from "./attachments.js";
 export {
   formatChannelMessages,
   type FormatContext,

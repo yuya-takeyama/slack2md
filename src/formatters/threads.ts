@@ -65,7 +65,12 @@ export function formatThreads(
     const starterRaw = JSON.parse(thread.starterMessage.raw);
     if (starterRaw.attachments && starterRaw.attachments.length > 0) {
       const attachmentsStr = formatAttachments(
-        starterRaw.attachments as Attachment[]
+        starterRaw.attachments as Attachment[],
+        {
+          users: context.users,
+          userGroups: context.userGroups,
+          channels: context.channels,
+        }
       );
       lines.push(attachmentsStr);
     }
@@ -87,7 +92,12 @@ export function formatThreads(
       const replyRaw = JSON.parse(reply.raw);
       if (replyRaw.attachments && replyRaw.attachments.length > 0) {
         const attachmentsStr = formatAttachments(
-          replyRaw.attachments as Attachment[]
+          replyRaw.attachments as Attachment[],
+          {
+            users: context.users,
+            userGroups: context.userGroups,
+            channels: context.channels,
+          }
         );
         lines.push(attachmentsStr);
       }
