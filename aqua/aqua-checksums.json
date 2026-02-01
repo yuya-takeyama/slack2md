@@ -1,6 +1,11 @@
 {
   "checksums": [
     {
+      "id": "github_release/github.com/cli/cli/v2.86.0/gh_2.86.0_macOS_arm64.zip",
+      "checksum": "BDE753978A352C5AE6C4ABEC47334D516E82807AF20C9DBBD45507A5A0AEDAAA",
+      "algorithm": "sha256"
+    },
+    {
       "id": "github_release/github.com/direnv/direnv/v2.37.1/direnv.darwin-arm64",
       "checksum": "4F569F3A36732BFD8B8FEA7BFCC6AD87A59745C109022164D0CA4832451D5369",
       "algorithm": "sha256"
